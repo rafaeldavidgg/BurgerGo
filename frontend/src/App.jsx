@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import MarkerClusterGroup from 'react-leaflet-cluster';
 
 import "./index.css";
 import { getHamburgueserias } from "./services/api";
@@ -38,20 +39,22 @@ function App() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {hamburgueserias.map((hb) => (
-          <Marker
-            key={hb._id}
-            position={[hb.coordenadas.lat, hb.coordenadas.lng]}
-          >
-            <Popup>
-              <strong>{hb.nombre}</strong>
-              <br />
-              {hb.descripcion}
-              <br />
-              <small>{hb.direccion}</small>
-            </Popup>
-          </Marker>
-        ))}
+        <MarkerClusterGroup>
+          {hamburgueserias.map((hb) => (
+            <Marker
+              key={hb._id}
+              position={[hb.coordenadas.lat, hb.coordenadas.lng]}
+            >
+              <Popup>
+                <strong>{hb.nombre}</strong>
+                <br />
+                {hb.descripcion}
+                <br />
+                <small>{hb.direccion}</small>
+              </Popup>
+            </Marker>
+          ))}
+        </MarkerClusterGroup>
       </MapContainer>
     </div>
   );
